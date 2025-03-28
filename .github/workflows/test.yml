@@ -1,0 +1,65 @@
+name: NeuroSync CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        language: [python, node]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        if: matrix.language == 'python'
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install Python deps
+        if: matrix.language == 'python'
+        run: |
+          pip install -r backend/requirements.txt
+          pip install black ruff mypy pytest
+
+      - name: Lint Python
+        if: matrix.language == 'python'
+        run: |
+          black --check backend/
+          ruff backend/
+          mypy backend/
+
+      - name: Run Python tests
+        if: matrix.language == 'python'
+        run: pytest backend/
+
+      - name: Set up Node
+        if: matrix.language == 'node'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Node deps
+        if: matrix.language == 'node'
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Lint & Typecheck JS
+        if: matrix.language == 'node'
+        run: |
+          cd frontend
+          npm run lint
+          npm run typecheck
+
+      - name: Run Frontend Tests
+        if: matrix.language == 'node'
+        run: |
+          cd frontend
+          npm run test
