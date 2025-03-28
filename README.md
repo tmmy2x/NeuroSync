@@ -53,7 +53,7 @@ Activates during peak mental zones to protect your deep work. Blocks dopamine lo
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/YourOrg/NeuroSync.git
+git clone https://github.com/tmmy2x/NeuroSync.git
 cd NeuroSync
 
 # 2. Start the dev environment
@@ -100,6 +100,7 @@ Focus Bubble: Dopamine Loop Blocker + Smart Music
 
 NeuroBoard: Structural Suggestions Engine
 
+
 ---
 
 📣 Community & Support
@@ -117,3 +118,5 @@ This project is licensed under the MIT License.
 ---
 
 Made with ❤️ by the NeuroSync team – Where productivity meets emotional intelligence.
+
+hello@neurosync.co.site
