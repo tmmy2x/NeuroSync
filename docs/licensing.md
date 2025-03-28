@@ -54,8 +54,8 @@ These features require a paid license and are not available for public redistrib
 
 If you're interested in using NeuroSync Pro for your business, product, or enterprise team:
 
-- **Contact Us**: [licensing@neurosync.dev](mailto:licensing@neurosync.dev)
-- **Visit**: [https://neurosync.dev](https://neurosync.dev)
+- **Contact Us**: [licensing@neurosync.co.site](mailto:licensing@neurosync.co.site)
+- **Visit**: [https://neurosync.co.site](https://neurosync.co.site)
 
 We'll help you choose the right license plan and unlock access to premium tools and ongoing support.
 
@@ -73,7 +73,7 @@ We'll help you choose the right license plan and unlock access to premium tools 
 
 ## Questions?
 
-For licensing concerns, sponsorships, or commercial inquiries, open a [discussion](https://github.com/YOUR_REPO/discussions) or email us directly.
+For licensing concerns, sponsorships, or commercial inquiries, open a [discussion](https://github.com/NeuroSync/discussions) or email us directly.
 
 ---
 
