@@ -9,7 +9,7 @@ We take security seriously at NeuroSync and appreciate responsible disclosure of
 If you discover a security issue:
 
 - **DO NOT** open a public GitHub issue.
-- Please email **security@neurosync.ai** with the following:
+- Please email **security@neurosync.co.site** with the following:
   - Description of the vulnerability
   - Steps to reproduce (PoC or screenshots if applicable)
   - Potential impact
