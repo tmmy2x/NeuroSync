@@ -1,0 +1,22 @@
+# NeuroSync GitHub Sponsors & Funding Configuration
+
+# GitHub Sponsors (displayed directly on your profile/repo)
+github: neurosync               # Replace with your GitHub username or org
+
+# External platforms where users can fund or support you
+patreon: NeuroSync              # Your Patreon username (or leave blank if not used)
+ko_fi: neurosync               # Your Ko-fi username
+buy_me_a_coffee: neurosync       # Optional — Buy Me a Coffee link (only one of ko-fi or BMC will show)
+
+# Custom links (shown at the bottom of the Sponsors panel)
+custom:
+  - https://neurosync.co.site/sponsor               # Main sponsor/upgrade page
+  - https://gumroad.com/neurosync               # Digital products & templates
+  - https://neurosync.co.site/pro-license           # Pro license & enterprise upgrade
+  - mailto:hello@neurosync.co.site                  # Contact email (optional)
+
+# Optional future integrations
+# open_collective: your_opencollective_slug
+# liberapay: your_username
+# tidelift: your_project_slug
+# community_bridge: your_project_slug
