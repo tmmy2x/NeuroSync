@@ -1,63 +1,114 @@
-# 🧠 NeuroSync
+# 🧠 NeuroSync – Your Mind. Supercharged.
 
-**NeuroSync** is an intelligent productivity OS that adapts to your emotional rhythm, communication style, and cognitive patterns — helping you do your best work without burning out.
+> The world's first emotionally intelligent productivity OS.
 
-> *“Feel aligned. Work in flow.”*
-
----
-
-## 🔧 Tech Stack
-
-| Layer         | Tech                    |
-|---------------|-------------------------|
-| Frontend      | Next.js + Tailwind CSS  |
-| Backend       | FastAPI (or Django)     |
-| Auth          | NextAuth.js             |
-| Database      | PostgreSQL              |
-| Realtime/Queue| Redis                   |
-| ML/NLP        | OpenAI / Transformers   |
-| Infra         | Docker + GitHub Actions |
+NeuroSync is a full-stack, AI-powered operating system designed to sync your work with your emotional rhythm. With adaptive planning, smart AI assistants, and dynamic interfaces that respond to your mood, NeuroSync transforms how individuals and teams navigate productivity, wellness, and flow.
 
 ---
 
-## 🚀 Features
+## 🚀 Core Features
 
-### Core Modules
-- **FlowForge™** – Smart task and calendar suggestions based on energy + rhythm
-- **PulseSync™** – Real-time emotional insight & wellness nudges
-- **EchoTwin™** – Personalized writing assistant that mimics your tone
-- **Focus Bubble™** – Distraction-proof deep work mode
-- **MoodMorph™** — Emotionally aware interface that adapts to your state
-- **NeuroBoard™** – Team mood heatmaps, collaboration radar & structural suggestions
+### 🔁 FlowForge™ – Adaptive Task & Calendar Engine  
+Dynamically reorders your day based on mood, rhythm, and burnout risk.
+
+### 🧠 EchoTwin™ – Your AI Thinking Partner  
+Writes, plans, and drafts with your communication style and cognitive patterns.
+
+### 🎭 MoodMorph™ – Emotion-Aware UI  
+An intelligent interface that changes based on your emotional state (text, face, and voice analysis).
+
+### 🧘‍♀️ PulseSync™ – Wellness Insights & Nudges  
+Real-time feedback on mental load with rituals, check-ins, and recovery prompts.
+
+### 🌐 NeuroBoard™ – Empathetic Team Dashboards  
+Visualize team energy, mood flow, and emotional tension across async collaboration.
 
 ---
 
-## 🛠️ Getting Started
+## 🛠 Tech Stack
 
-### Prerequisites
+| Layer         | Tools & Frameworks                           |
+|--------------|----------------------------------------------|
+| Frontend     | React · Tailwind CSS · Framer Motion         |
+| Backend      | FastAPI · PostgreSQL · Langchain             |
+| AI Layer     | OpenAI · Sentiment/Voice/Facial Models       |
+| Infra & Dev  | Docker · Vercel · GitHub Actions             |
 
-- Docker + Docker Compose
-- Node.js 18+ and Python 3.11+ (for local dev)
-- OpenAI API key (or compatible LLM service)
+---
 
-### 1. Clone the Repo
+## 📸 Demo & Screenshots
+
+> Coming soon: Interactive product tour + demo video
+
+<p align="center">
+  <img src="./assets/neurosync-dashboard-preview.png" width="80%" alt="NeuroSync UI Preview" />
+</p>
+
+---
+
+## 📦 Getting Started
 
 ```bash
-git clone https://github.com/your-org/neurosync.git
-cd neurosync
+# 1. Clone the repo
+git clone https://github.com/YourOrg/NeuroSync.git
+cd NeuroSync
+
+# 2. Start the dev environment
+docker-compose up --build
+
+Visit http://localhost:3000 to launch the app.
+
+---
 
 
-...
+📂 Project Structure
+NeuroSync/
+├── frontend/             # React app for UI
+├── backend/              # FastAPI + AI logic
+├── data/                 # Mood logs, models, and mock data
+├── docs/                 # Developer documentation
+├── .github/              # CI workflows & templates
+└── docker-compose.yml    # Local orchestration
 
-## 🧪 Testing
-...
+---
 
-## 🤝 Contributing
-We welcome contributions!  
-Please see `CONTRIBUTING.md` for coding guidelines, pull request templates, and issue tracking.
+🤝 Contributing
+We welcome collaborators of all skill levels.
 
-## 🧠 License
-MIT © [Your Name / Company]
+See CONTRIBUTING.md
 
-## 📬 Contact
-For support or partnership opportunities, email **hello@neurosync.ai** or visit [neurosync.ai](https://neurosync.ai)
+Follow our Code of Conduct
+
+Browse open issues
+
+---
+
+🧠 Roadmap
+✅ v1.0 Modules Complete
+🛠️ In Progress:
+
+EchoTwin: Thought Continuation Engine
+
+PulseSync: Habit-aware AI Coach
+
+MoodMorph: Multi-modal emotion input
+
+NeuroBoard: Structural Suggestions Engine
+
+---
+
+📣 Community & Support
+💬 Join our Discord
+
+🧭 View the Public Roadmap
+
+📝 Read the NeuroSync Blog
+
+---
+
+🪪 License
+This project is licensed under the MIT License.
+
+---
+
+Made with ❤️ by the NeuroSync team – Where productivity meets emotional intelligence.
