@@ -23,6 +23,9 @@ Real-time feedback on mental load with rituals, check-ins, and recovery prompts.
 ### 🌐 NeuroBoard™ – Empathetic Team Dashboards  
 Visualize team energy, mood flow, and emotional tension across async collaboration.
 
+### ✨ Focus Bubble™ – Distraction-Proof Focus Mode  
+Activates during peak mental zones to protect your deep work. Blocks dopamine loops, plays custom focus audio, and gently nudges you back into flow.
+
 ---
 
 ## 🛠 Tech Stack
@@ -92,6 +95,8 @@ EchoTwin: Thought Continuation Engine
 PulseSync: Habit-aware AI Coach
 
 MoodMorph: Multi-modal emotion input
+
+Focus Bubble: Dopamine Loop Blocker + Smart Music
 
 NeuroBoard: Structural Suggestions Engine
 
