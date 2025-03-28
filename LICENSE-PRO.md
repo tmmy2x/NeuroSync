@@ -24,7 +24,7 @@ All `/pro/` features and trademarks remain the property of the NeuroSync project
 ## How to License
 To obtain a commercial license or inquire about enterprise terms:
 
-**Email:** licensing@neurosync.dev  
-**Site:** [https://neurosync.dev](https://neurosync.dev)
+**Email:** licensing@neurosync.co.site
+**Site:** [https://neurosync.co.site](https://neurosync.co.site)
 
 Thank you for supporting sustainable open innovation.
