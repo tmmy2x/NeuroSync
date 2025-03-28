@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Focus Bubble</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 6px 10px;
+      text-align: left;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>🧠 Focus Bubble™</h1>
+  <button onclick="window.focusAPI.startFocus()">Start Focus</button>
+  <button onclick="window.focusAPI.endFocus()">End Focus</button>
+  <button onclick="loadSessionHistory()">Show Session History</button>
+
+  <label for="tag">Session Tag:</label>
+<input id="tag" type="text" placeholder="e.g. Writing, Coding" />
+<br />
+<button onclick="startWithTag()">Start Focus</button>
+
+<label for="tag">Session Tag:</label>
+<input id="tag" type="text" placeholder="e.g. Writing, Coding" />
+
+<label for="duration">Duration:</label>
+<select id="duration">
+  <option value="15">15 minutes</option>
+  <option value="25" selected>25 minutes</option>
+  <option value="50">50 minutes</option>
+</select>
+
+<br />
+<button onclick="startWithTag()">Start Focus</button>
+
+<h2>📊 Focus Dashboard</h2>
+<button onclick="loadDashboard()">Refresh Dashboard</button>
+<div id="dashboard">
+  <ul id="dashboard-data"></ul>
+  <canvas id="focusChart" width="600" height="300"></canvas>
+</div>
+
+
+  <table id="history-table" style="display:none">
+    <thead>
+      <tr>
+        <th>Start</th>
+        <th>End</th>
+        <th>Duration (min)</th>
+        <th>Completed</th>
+        <th>Tag</th>
+      </tr>
+    </thead>
+    <tbody id="history-body"></tbody>
+  </table>
+
+  <script>
+    function startWithTag() {
+  const tag = document.getElementById('tag').value || 'untagged';
+  const duration = parseInt(document.getElementById('duration').value);
+  window.focusAPI.startFocus(tag);
+}
+
+    async function loadSessionHistory() {
+      const history = await window.focusAPI.requestSessionHistory();
+      const table = document.getElementById('history-table');
+      const tbody = document.getElementById('history-body');
+      tbody.innerHTML = '';
+
+      history.forEach(session => {
+        const tr = document.createElement('tr');
+
+        const start = new Date(session.start).toLocaleString();
+        const end = new Date(session.end).toLocaleString();
+        const duration = Math.round(session.duration / 60);
+        const completed = session.completed ? '✅' : '❌';
+        const tag = session.tag || '—';
+
+        tr.innerHTML = `
+          <td>${start}</td>
+          <td>${end}</td>
+          <td>${duration}</td>
+          <td>${completed}</td>
+          <td>${tag}</td>
+          <td>${distractions}</td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+
+      table.style.display = 'table';
+    }
+  </script>
+  <script>
+    async function loadDashboard() {
+      const stats = await window.focusAPI.getDashboardStats();
+      const list = document.getElementById('dashboard-data');
+      list.innerHTML = `
+        <li>Total Sessions: ${stats.totalSessions}</li>
+        <li>Completed Sessions: ${stats.completedSessions}</li>
+        <li>Completion Rate: ${stats.completionRate}%</li>
+        <li>Total Focus Time: ${stats.totalFocusMinutes} min</li>
+        <li>Avg. Session Duration: ${stats.averageDurationMinutes} min</li>
+        <li>Focus Today: ${stats.todayFocusMinutes} min</li>
+        <li>🔥 Streak: ${stats.streak} day(s)</li>
+      `;
+    }
+  
+    // Auto-load on start
+    loadDashboard();
+
+    <h3>🧱 Blocked Apps</h3>
+<ul id="blocked-apps-list"></ul>
+
+<input type="text" id="new-app-input" placeholder="App name e.g. Discord" />
+<button onclick="addBlockedApp()">Add App</button>
+<h3>🏆 Focus XP</h3>
+<p id="xp-stats">Loading XP...</p>
+<progress id="xp-bar" value="0" max="100" style="width:100%; height: 20px;"></progress>
+
+
+    let chartInstance = null;
+
+async function renderFocusChart() {
+  const data = await window.focusAPI.getFocusChartData();
+
+  const labels = Object.keys(data);
+  const values = Object.values(data);
+
+  const ctx = document.getElementById('focusChart').getContext('2d');
+
+  if (chartInstance) chartInstance.destroy(); // clean old chart
+
+  chartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Focus Time (min)',
+        data: values,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
+
+  </script>
+  <script>
+    async function loadBlockedApps() {
+      const apps = await window.focusAPI.getBlockedApps();
+      const list = document.getElementById('blocked-apps-list');
+      list.innerHTML = '';
+  
+      apps.forEach((app, index) => {
+        const li = document.createElement('li');
+        li.textContent = app;
+        const btn = document.createElement('button');
+        btn.textContent = '❌';
+        btn.onclick = async () => {
+          const updated = [...apps.slice(0, index), ...apps.slice(index + 1)];
+          await window.focusAPI.updateBlockedApps(updated);
+          loadBlockedApps();
+        };
+        li.appendChild(btn);
+        list.appendChild(li);
+      });
+    }
+  
+    async function addBlockedApp() {
+      const input = document.getElementById('new-app-input');
+      const newApp = input.value.trim();
+      if (!newApp) return;
+  
+      const current = await window.focusAPI.getBlockedApps();
+      if (!current.includes(newApp)) {
+        current.push(newApp);
+        await window.focusAPI.updateBlockedApps(current);
+      }
+  
+      input.value = '';
+      loadBlockedApps();
+    }
+  
+    // Call it when the page loads
+    loadBlockedApps();
+
+    async function loadXP() {
+  const xp = await window.focusAPI.getXPData();
+  const levelXP = xp.totalXP % 100;
+  document.getElementById('xp-stats').innerText =
+    `Level ${xp.level} — ${levelXP}/100 XP`;
+  document.getElementById('xp-bar').value = levelXP;
+}
+
+// Call it on load & after sessions
+loadXP();
+
+// Modify existing loadDashboard()
+async function loadDashboard() {
+  const stats = await window.focusAPI.getDashboardStats();
+  const list = document.getElementById('dashboard-data');
+  list.innerHTML = `
+    <li>Total Sessions: ${stats.totalSessions}</li>
+    <li>Completed Sessions: ${stats.completedSessions}</li>
+    <li>Completion Rate: ${stats.completionRate}%</li>
+    <li>Total Focus Time: ${stats.totalFocusMinutes} min</li>
+    <li>Avg. Session Duration: ${stats.averageDurationMinutes} min</li>
+    <li>Focus Today: ${stats.todayFocusMinutes} min</li>
+    <li>🔥 Streak: ${stats.streak} day(s)</li>
+  `;
+
+  await renderFocusChart();
+  await loadXP();
+}
+const { ipcRenderer } = require('electron');
+
+ipcRenderer.on('level-up', (event, level) => {
+  const popup = document.getElementById('level-up-popup');
+  document.getElementById('level-up-number').innerText = `Level ${level}`;
+  popup.style.display = 'block';
+
+  setTimeout(() => {
+    popup.style.display = 'none';
+  }, 5000);
+});
+
+  </script>
+  
+  <div id="level-up-popup" style="display:none; position:fixed; top:30%; left:50%; transform:translateX(-50%);
+background:#111; color:#fff; padding:20px 40px; border-radius:10px; font-size:24px; z-index:1000; box-shadow:0 0 20px rgba(0,0,0,0.4);">
+  🚀 Level Up! You're now <span id="level-up-number"></span> 🎉
+</div>
+<script>
+    const { ipcRenderer } = require('electron');
+  
+    ipcRenderer.on('theme-unlocked', (event, theme) => {
+      window.moodMorphAPI.applyTheme(theme);
+      const popup = document.getElementById('level-up-popup');
+      popup.innerHTML += `<br>🧠 Theme Unlocked: ${theme.toUpperCase()} Mode`;
+      popup.style.display = 'block';
+      setTimeout(() => popup.style.display = 'none', 5000);
+    });
+  </script>
+  <h3>🎨 Theme Gallery</h3>
+  <div id="theme-gallery" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
+  <script>
+    const availableThemes = {
+      calm: { name: 'Calm Mode 🌊', icon: '💙' },
+      power: { name: 'Power Mode ⚡', icon: '💥' },
+      night: { name: 'Night Focus 🌙', icon: '🌑' },
+      dynamic: { name: 'Dynamic Shift 🔮', icon: '🌈' }
+    };
+  
+    async function loadThemeGallery() {
+      const data = await window.focusAPI.getThemeData();
+      const gallery = document.getElementById('theme-gallery');
+      gallery.innerHTML = '';
+  
+      for (const key in availableThemes) {
+        const unlocked = data.unlocked.includes(key);
+        const div = document.createElement('div');
+        div.style = `
+          border: 2px solid ${unlocked ? '#0f0' : '#aaa'};
+          padding: 10px; border-radius: 10px; width: 140px;
+          background: ${unlocked ? '#222' : '#444'}; color: white;
+          opacity: ${unlocked ? 1 : 0.4};
+          display: flex; flex-direction: column; align-items: center;
+        `;
+  
+        const title = document.createElement('div');
+        title.innerText = availableThemes[key].name;
+  
+        const icon = document.createElement('div');
+        icon.innerText = availableThemes[key].icon;
+        icon.style = 'font-size: 32px; margin: 10px 0';
+  
+        const previewBtn = document.createElement('button');
+        previewBtn.innerText = 'Preview';
+        previewBtn.disabled = !unlocked;
+        previewBtn.onclick = () => window.moodMorphAPI.applyTheme(key);
+  
+        const defaultBtn = document.createElement('button');
+        defaultBtn.innerText = 'Set as Default';
+        defaultBtn.disabled = !unlocked;
+        defaultBtn.onclick = async () => {
+          await window.focusAPI.setDefaultTheme(key);
+          alert(`Default theme set to: ${availableThemes[key].name}`);
+        };
+  
+        div.appendChild(title);
+        div.appendChild(icon);
+        div.appendChild(previewBtn);
+        div.appendChild(defaultBtn);
+  
+        gallery.appendChild(div);
+      }
+    }
+  
+    // Call on load
+    loadThemeGallery();
+  </script>
+  
+</body>
+</html>

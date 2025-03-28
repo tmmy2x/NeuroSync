@@ -1,0 +1,25 @@
+# .github/labeler.yml
+bug:
+  - 'bug'
+  - 'error'
+  - 'unexpected'
+
+feature:
+  - 'feature'
+  - 'add'
+  - 'new'
+
+design:
+  - 'ux'
+  - 'ui'
+  - 'design'
+
+architecture:
+  - 'architecture'
+  - 'infra'
+  - 'refactor'
+
+documentation:
+  - 'docs'
+  - 'readme'
+  - 'guide'
