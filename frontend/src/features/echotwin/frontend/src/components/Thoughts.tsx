@@ -1,37 +1,38 @@
 import { useState } from 'react'
 import axios from 'axios'
+import { useEffect as reactUseEffect } from 'react'
 
 export default function Thoughts() {
+  const userId: string = "exampleUserId"; // Replace with actual logic to fetch userId
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [continued, setContinued] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
-  const userId = localStorage.getItem("echotwin_user_id") || ""
   const [thoughts, setThoughts] = useState<string[]>([])
   const [selected, setSelected] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
   const [searchResults, setSearchResults] = useState<string[]>([])
   
 
+  customUseEffect(() => {
+    const fetchThoughts = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8000/thought/${userId}`)
+        setThoughts(res.data.thoughts || [])
+      } catch {
+        console.log("No thoughts found.")
+      }
+    }
+
+    if (userId) fetchThoughts()
+  }, [userId])
+
   const handleSave = async () => {
     if (!title || !content || !userId) {
       setError("Please enter all fields.")
       return
     }
-
-    useEffect(() => {
-        const fetchThoughts = async () => {
-          try {
-            const res = await axios.get(`http://localhost:8000/thought/${userId}`)
-            setThoughts(res.data.thoughts || [])
-          } catch {
-            console.log("No thoughts found.")
-          }
-        }
-      
-        if (userId) fetchThoughts()
-      }, [userId])
       
 
 
@@ -73,8 +74,9 @@ export default function Thoughts() {
     }
   }
 
-  return (
-<div className="mb-4">
+return (
+  <>
+    <div className="mb-4">
   <label className="block font-semibold mb-1">Semantic Search</label>
   <input
     type="text"
@@ -88,39 +90,38 @@ export default function Thoughts() {
           const res = await axios.post("http://localhost:8000/thought/search", {
             user_id: userId,
             query: searchQuery
-          })
-          setSearchResults(res.data.matches.map((m: any) => m.title))
+          });
+          setSearchResults(res.data.matches.map((m: any) => m.title));
         } catch {
-          setError("Search failed.")
+          setError("Search failed.");
         }
       }
     }}
   />
-</div>
+</div>)
 {searchResults.length > 0 && (
-    <div className="mb-4">
-      <p className="font-semibold text-sm mb-1">Top Matches:</p>
-      <ul className="list-disc list-inside text-sm">
-        {searchResults.map((title) => (
-          <li key={title}>
-            <button
-              className="text-blue-600 hover:underline"
-              onClick={async () => {
-                setSelected(title)
-                const res = await axios.get(`http://localhost:8000/thought/${userId}/${title}`)
-                setTitle(res.data.title)
-                setContent(res.data.content)
-              }}
-            >
-              {title}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )}
-  
-    {thoughts.length > 0 && (
+  <div className="mb-4">
+    <p className="font-semibold text-sm mb-1">Top Matches:</p>
+    <ul className="list-disc list-inside text-sm">
+      {searchResults.map((title) => (
+        <li key={title}>
+          <button
+            className="text-blue-600 hover:underline"
+            onClick={async () => {
+              setSelected(title);
+              const res = await axios.get(`http://localhost:8000/thought/${userId}/${title}`);
+              setTitle(res.data.title);
+              setContent(res.data.content);
+            }}
+          >
+            {title}
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+  {thoughts.length > 0 && (
         <div className="mb-4">
           <label className="block font-semibold mb-1">Load Saved Thought</label>
           <select
@@ -188,8 +189,13 @@ export default function Thoughts() {
         <div className="bg-gray-50 border p-4 rounded-md">
           <p className="font-semibold">AI Continuation:</p>
           <pre className="whitespace-pre-wrap text-sm">{continued}</pre>
-        </div>
-      )}
-    </div>
-  )
-}
+          </div>
+        )})
+      </div>
+      </>
+    );
+  }
+  function customUseEffect(callback: () => void, dependencies: any[]) {
+      reactUseEffect(callback, dependencies)
+    }
+

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { planDayFromHistory, planDay } from '../Flowforge/planner/task_planner';
+import { planDayFromHistory, planDay } from '../flowforge/planner/task_planner';
 
 const FlowForgeSidebar = () => {
   const [mode, setMode] = useState<'smart' | 'manual'>('smart');
@@ -43,7 +43,7 @@ const FlowForgeSidebar = () => {
 
       <h3 className="font-semibold text-lg mb-2">Suggested Tasks</h3>
       <ul className="list-disc pl-6 space-y-1 text-sm">
-        {suggestions.map((task, idx) => (
+        {suggestions.map((task: string, idx: number) => (
           <li key={idx}>{task}</li>
         ))}
       </ul>

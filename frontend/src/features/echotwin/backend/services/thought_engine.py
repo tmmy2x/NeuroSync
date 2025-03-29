@@ -55,10 +55,7 @@ def save_thought(user_id: str, title: str, content: str):
     vector_key = f"thought_vectors:{user_id}:{title}"
     r.set(vector_key, json.dumps(embedding))
 
-    def cosine_similarity(vec1: list[float], vec2: list[float]) -> float:
-    a = np.array(vec1)
-    b = np.array(vec2)
-    return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b)))
+    
 
 def search_thoughts(user_id: str, query: str) -> list[dict]:
     query_vec = embed_text(query)
@@ -75,3 +72,8 @@ def search_thoughts(user_id: str, query: str) -> list[dict]:
 
     top_matches = sorted(scored, key=lambda x: x["score"], reverse=True)[:3]
     return top_matches
+
+def cosine_similarity(vec1: list[float], vec2: list[float]) -> float:
+        a = np.array(vec1)
+        b = np.array(vec2)
+        return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b)))

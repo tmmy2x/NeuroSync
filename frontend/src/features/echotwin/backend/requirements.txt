@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+openai
+pydantic
+python-dotenv
+psycopg2-binary
+redis
+httpx             # For async HTTP calls (useful in tests/integrations)
+pytest            # For test coverage
