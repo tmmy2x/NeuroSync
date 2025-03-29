@@ -117,14 +117,16 @@
     // Auto-load on start
     loadDashboard();
 
-    <h3>🧱 Blocked Apps</h3>
-<ul id="blocked-apps-list"></ul>
+<div>
+  <h3>🧱 Blocked Apps</h3>
+  <ul id="blocked-apps-list"></ul>
 
-<input type="text" id="new-app-input" placeholder="App name e.g. Discord" />
-<button onclick="addBlockedApp()">Add App</button>
-<h3>🏆 Focus XP</h3>
-<p id="xp-stats">Loading XP...</p>
-<progress id="xp-bar" value="0" max="100" style="width:100%; height: 20px;"></progress>
+  <input type="text" id="new-app-input" placeholder="App name e.g. Discord" />
+  <button onclick="addBlockedApp()">Add App</button>
+  <h3>🏆 Focus XP</h3>
+  <p id="xp-stats">Loading XP...</p>
+  <progress id="xp-bar" value="0" max="100" style="width:100%; height: 20px;"></progress>
+</div>
 
 
     let chartInstance = null;

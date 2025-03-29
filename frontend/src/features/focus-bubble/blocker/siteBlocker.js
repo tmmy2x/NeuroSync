@@ -29,6 +29,7 @@ function setupBlocking() {
           body: `Blocked access to: ${url.split("/")[2]}`
         }).show();
       }      
+    });
 }
 
 module.exports = { setupBlocking };

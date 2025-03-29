@@ -1,4 +1,4 @@
-from fastapi import Request
+from fastapi import FastAPI, Request
 from scheduler import suggest_break
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
@@ -44,6 +44,8 @@ def insert_event(creds, suggestion):
     created_event = service.events().insert(calendarId="primary", body=event).execute()
     return created_event
 
+app = FastAPI()
+
 @app.post("/schedule-engine")
 async def create_suggested_break(request: Request):
     payload = await request.json()
@@ -56,6 +58,9 @@ async def create_suggested_break(request: Request):
     else:
         return {"message": "No open slots found"}
     
+# Mock user_sessions for demonstration purposes
+user_sessions = {}
+
 @app.post("/schedule-engine")
 async def schedule_break(request: Request):
     payload = await request.json()

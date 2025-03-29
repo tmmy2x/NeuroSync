@@ -134,3 +134,24 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+# Node.js
+**/node_modules/
+
+# Python
+**/venv/
+**/__pycache__/
+*.pyc
+
+# Logs & system files
+*.log
+.DS_Store
+
+# Env & credentials
+.env
+
+# Frontend build files (optional)
+**/build/
+**/dist/
+

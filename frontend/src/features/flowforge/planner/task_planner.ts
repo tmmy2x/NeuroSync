@@ -1,4 +1,6 @@
 import { detectMoodFromNote } from '../api/mood';
+import { fileSave } from "browser-fs-access";
+import path from "path-browserify";
 
 export const planDay = (journal: string) => {
   const { mood } = detectMoodFromNote(journal);
@@ -84,4 +86,55 @@ export const planDayFromHistory = () => {
   }
 };
 
+// Analyze journal text and infer emotion
+function analyzeEmotionFromText(text: string): string {
+  const lowered = text.toLowerCase();
+
+  if (lowered.includes("tired") || lowered.includes("exhausted")) return "tired";
+  if (lowered.includes("excited") || lowered.includes("energized")) return "energized";
+  if (lowered.includes("stressed") || lowered.includes("anxious")) return "anxious";
+  if (lowered.includes("focused")) return "focused";
+
+  return "calm";
+}
+
+// Save emotion to shared/emotion_state.json
+function saveEmotionToFile(emotion: string, source = "journal_text") {
+  const payload = {
+    emotion,
+    source,
+    timestamp: new Date().toISOString()
+  };
+
+  const filePath = path.join("./shared/emotion_state.json");
+
+  try {
+    fileSave(new Blob([JSON.stringify(payload, null, 2)]), {
+      fileName: "emotion_state.json",
+    });
+    console.log(`[MoodMorph] Emotion saved: ${emotion}`);
+  } catch (err) {
+    console.error("[MoodMorph] Failed to save emotion:", err);
+  }
+}
+
+// Main exported function
+export function planDayFromJournal(journal: string): string[] {
+  const emotion = analyzeEmotionFromText(journal);
+  saveEmotionToFile(emotion, "journal_text");
+
+  // Sample task suggestions based on emotion
+  switch (emotion) {
+    case "tired":
+      return ["Clear Inbox", "Read Documentation", "File Cleanup"];
+    case "energized":
+      return ["Launch Campaign", "Deep Work Sprint", "Strategic Planning"];
+    case "anxious":
+      return ["Knock Out Quick Wins", "Declutter Workspace", "Reset Walk"];
+    case "focused":
+      return ["Complete Feature X", "Draft Blog Post", "Optimize Workflow"];
+    default:
+      return ["Plan Tomorrow", "Review Notes", "Skim Articles"];
+  }
+}
 

@@ -1,3 +1,5 @@
+import React from 'react';
+
 const MoodDashboard = ({ mood, nudge }: { mood: string; nudge?: string }) => (
     <div className="mt-4 p-4 rounded bg-white shadow">
       <p className="text-lg font-semibold">Current Mood:</p>

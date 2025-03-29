@@ -1,3 +1,4 @@
+import React from "react";
 import axios from "axios";
 
 type Ritual = {
@@ -28,25 +29,25 @@ type Ritual = {
     );
   };
 
-  const giveFeedback = (accepted: boolean) => {
-    axios.post("http://localhost:8000/feedback", {
-      mood: ritual.title,
-      nudge,
-      accepted
-    });
-  };
+  const giveFeedback = (ritual: Ritual, accepted: boolean) => {
+      const nudge = "defaultNudgeValue"; // Replace with an appropriate value or logic
+      axios.post("http://localhost:8000/feedback", {
+        mood: ritual.title,
+        nudge,
+        accepted
+      });
+    };
   
-  {/* Inside component */}
   <div className="mt-4">
     <p className="text-sm text-gray-600">Did this help?</p>
     <button
-      onClick={() => giveFeedback(true)}
+      onClick={() => giveFeedback(ritual, true)}
       className="px-3 py-1 mr-2 bg-green-500 text-white rounded"
     >
       Yes
     </button>
     <button
-      onClick={() => giveFeedback(false)}
+      onClick={() => giveFeedback(ritual, false)}
       className="px-3 py-1 bg-red-500 text-white rounded"
     >
       No

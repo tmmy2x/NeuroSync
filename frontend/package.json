@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "browser-fs-access": "^0.35.0",
+    "path-browserify": "^1.0.1",
+    "react-dom": "^19.1.0",
+    "sentiment": "^5.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.14",
+    "@types/sentiment": "^5.0.4"
+  }
+}

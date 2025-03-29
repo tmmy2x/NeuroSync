@@ -96,65 +96,66 @@ localStorage.setItem("echotwin_profile", JSON.stringify(res.data.tone_profile.tr
   }
 
   return (
-    <div className="mb-4">
-  <label className="block font-semibold mb-1">Your Echo ID</label>
-  <input
-    type="text"
-    className="w-full p-2 border rounded-md"
-    placeholder="e.g. timmy-ai"
-    value={userId}
-    onChange={(e) => setUserId(e.target.value.trim())}
-  />
-  {idError && <p className="text-red-600 text-sm mt-1">{idError}</p>}
+<div>
+  <div className="mb-4">
+    <label className="block font-semibold mb-1">Your Echo ID</label>
+    <input
+      type="text"
+      className="w-full p-2 border rounded-md"
+      placeholder="e.g. timmy-ai"
+      value={userId}
+      onChange={(e) => setUserId(e.target.value.trim())}
+    />
+    {idError && <p className="text-red-600 text-sm mt-1">{idError}</p>}
+  </div>
+
+  <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-xl p-6 space-y-6">
+    <h2 className="text-xl font-semibold">Enter Your Writing Samples</h2>
+
+    {samples.map((sample, i) => (
+      <textarea
+        key={i}
+        className="w-full p-3 border rounded-md resize-y min-h-[100px]"
+        placeholder={`Sample #${i + 1}`}
+        value={sample}
+        onChange={(e) => handleChange(e.target.value, i)}
+      />
+    ))}
+
+    <button
+      onClick={addSample}
+      className="text-sm text-blue-600 hover:underline"
+    >
+      + Add another sample
+    </button>
+
+    <button
+      onClick={handleSubmit}
+      className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+      disabled={loading}
+    >
+      {loading ? "Analyzing..." : "Generate Style Profile"}
+    </button>
+
+    <button
+      onClick={handleClear}
+      className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+    >
+      Clear My Profile
+    </button>
+
+    {error && (
+      <p className="text-red-600 font-medium">{error}</p>
+    )}
+
+    {profile && (
+      <div className="bg-gray-50 border p-4 rounded-md overflow-x-auto">
+        <pre className="whitespace-pre-wrap text-sm">
+          {JSON.stringify(profile.traits, null, 2)}
+        </pre>
+      </div>
+    )}
+  </div>
 </div>
-
-    <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-xl p-6 space-y-6">
-      <h2 className="text-xl font-semibold">Enter Your Writing Samples</h2>
-
-      {samples.map((sample, i) => (
-        <textarea
-          key={i}
-          className="w-full p-3 border rounded-md resize-y min-h-[100px]"
-          placeholder={`Sample #${i + 1}`}
-          value={sample}
-          onChange={(e) => handleChange(e.target.value, i)}
-        />
-      ))}
-
-      <button
-        onClick={addSample}
-        className="text-sm text-blue-600 hover:underline"
-      >
-        + Add another sample
-      </button>
-
-      <button
-        onClick={handleSubmit}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
-        disabled={loading}
-      >
-        {loading ? "Analyzing..." : "Generate Style Profile"}
-      </button>
-
-      <button
-  onClick={handleClear}
-  className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
->
-  Clear My Profile
-</button>
-
-
-      {error && (
-        <p className="text-red-600 font-medium">{error}</p>
-      )}
-
-      {profile && (
-        <div className="bg-gray-50 border p-4 rounded-md overflow-x-auto">
-          <pre className="whitespace-pre-wrap text-sm">
-            {JSON.stringify(profile.traits, null, 2)}
-          </pre>
-        </div>
-      )}
-    </div>
   )
 }

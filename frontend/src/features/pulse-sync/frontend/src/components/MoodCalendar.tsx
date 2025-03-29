@@ -1,9 +1,10 @@
+import React from "react";
 import CalendarHeatmap from "react-calendar-heatmap";
 import "react-calendar-heatmap/dist/styles.css";
 import { useState } from "react";
 import axios from "axios";
 
-const MoodCalendar = ({ data }) => {
+const MoodCalendarHeatmap = ({ data }) => {
     return (
       <div>
         <h2 className="text-xl font-bold mb-4">📅 Mood Calendar</h2>
@@ -23,43 +24,23 @@ const MoodCalendar = ({ data }) => {
             return "color-github-1";
           }}
           tooltipDataAttrs={(value) => ({
-            "data-tip": `${value.date} – Mood: ${value.count || 0}/5 · Breaks: ${value.breaks || 0}`
-          })}
+            'data-tip': `${value?.date || ''} – Mood: ${value?.count || 0}/5 · Breaks: ${value?.breaks || 0}`
+          }) as any}
           showWeekdayLabels
-          renderBlock={(value, className) => {
-            return (
-              <div
-                className={className}
-                style={{
-                  position: "relative",
-                  borderRadius: "3px",
-                  backgroundColor: value ? undefined : "#eee",
-                }}
-              >
-                {value?.breaks > 0 && (
-                  <span
-                    style={{
-                      position: "absolute",
-                      top: "2px",
-                      right: "2px",
-                      fontSize: "0.65em",
-                      color: "purple"
-                    }}
-                    title={`${value.breaks} break(s)`}
-                  >
-                    ⏸
-                  </span>
-                )}
-              </div>
-            );
-          }}
+          // Custom rendering of blocks is not supported directly; use CSS for styling.
         />
       </div>
     );
   };
  
   const MoodCalendar = ({ data }) => {
-    const [log, setLog] = useState([]);
+    interface LogEntry {
+        mood: string;
+        timestamp: string;
+        context?: string;
+    }
+
+    const [log, setLog] = useState<LogEntry[]>([]);
     const [selectedDay, setSelectedDay] = useState(null);
   
     const fetchDayLog = async (date) => {
@@ -72,7 +53,24 @@ const MoodCalendar = ({ data }) => {
       <div>
         <h2 className="text-xl font-bold mb-4">📅 Mood Calendar</h2>
         <CalendarHeatmap
-          // ...existing config
+          startDate={new Date(new Date().setMonth(new Date().getMonth() - 1))}
+          endDate={new Date()}
+          values={data.map(d => ({
+            date: d.date,
+            count: d.score,
+            breaks: d.breaks || 0
+          }))}
+          classForValue={(value) => {
+            if (!value) return "color-empty";
+            if (value.count >= 4) return "color-github-4";
+            if (value.count >= 3) return "color-github-3";
+            if (value.count >= 2) return "color-github-2";
+            return "color-github-1";
+          }}
+          tooltipDataAttrs={(value) => ({
+            'data-tip': `${value?.date || ''} – Mood: ${value?.count || 0}/5 · Breaks: ${value?.breaks || 0}`
+          }) as any}
+          showWeekdayLabels
           onClick={(value) => value?.date && fetchDayLog(value.date)}
         />
   

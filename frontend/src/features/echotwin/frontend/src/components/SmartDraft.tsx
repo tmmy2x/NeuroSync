@@ -1,6 +1,25 @@
 import { useState } from 'react'
 import axios from 'axios'
 
+const handleRefine = async (instruction: string, draft: string, setDraft: React.Dispatch<React.SetStateAction<string>>) => {
+  if (!draft) return;
+
+  setLoading(true);
+  setError("");
+
+  try {
+    const res = await axios.post("http://localhost:8000/draft/refine", {
+      draft,
+      refinement: instruction,
+    });
+    setDraft(res.data.refined);
+  } catch (err) {
+    setError("Refinement failed.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 export default function SmartDraft() {
   const [prompt, setPrompt] = useState("")
   const [draftType, setDraftType] = useState("email")
@@ -36,6 +55,17 @@ export default function SmartDraft() {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(draft)
   }
+  
+  // Add a button to use the copyToClipboard function
+  <button
+    onClick={copyToClipboard}
+    disabled={!draft}
+    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+  >
+    Copy to Clipboard
+  </button>
+
+
 
   return (
     <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-xl p-6 space-y-6">
@@ -67,52 +97,38 @@ export default function SmartDraft() {
           {loading ? "Generating..." : "Generate Draft"}
         </button>
 
-        <div className="mt-4 flex gap-3 flex-wrap">
+<div className="mt-4 flex gap-3 flex-wrap">
   {["Make it more concise", "Make it more formal", "Add warmth"].map((label) => (
     <button
       key={label}
-      onClick={() => handleRefine(label)}
+      onClick={() => handleRefine(label, draft, setDraft)}
       className="bg-gray-200 text-sm px-3 py-1 rounded hover:bg-gray-300"
     >
       {label}
     </button>
   ))}
 </div>
-  
+
+        {error && (
+          <div className="text-red-500 text-sm mt-2">
+            {error}
+          </div>
+        )}
       </div>
-
-      {error && <p className="text-red-600">{error}</p>}
-
-      {draft && (
-        <div className="border rounded-md p-4 bg-gray-50">
-          <pre className="whitespace-pre-wrap text-sm">{draft}</pre>
-          <button
-            onClick={copyToClipboard}
-            className="mt-2 text-sm text-blue-600 hover:underline"
-          >
-            Copy to Clipboard
-          </button>
-          const handleRefine = async (instruction: string) => {
-  if (!draft) return
-
-  setLoading(true)
-  setError("")
-
-  try {
-    const res = await axios.post("http://localhost:8000/draft/refine", {
-      draft,
-      refinement: instruction
-    })
-    setDraft(res.data.refined)
-  } catch (err) {
-    setError("Refinement failed.")
-  } finally {
-    setLoading(false)
-  }
-}
-
-        </div>
-      )}
     </div>
   )
 }
+function setLoading(isLoading: boolean) {
+  console.warn("setLoading is already defined as a state setter within the component.");
+}
+function setLoading(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}
+function setError(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+function setDraft(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+
+

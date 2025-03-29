@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTypingTracker } from "./useTypingTracker";
 import MoodDashboard from "./MoodDashboard";
 import { useFacialEmotion } from "./useFacialEmotion";
@@ -46,11 +46,12 @@ function App() {
   );
 }
 
-export default App;
+// Removed duplicate default export
 
-function App() {
+function TypingAndEmotionApp() {
     const { text, metrics, onChange } = useTypingTracker();
     const emotion = useFacialEmotion(); // 🎯 Facial Emotion
+    const socketRef = useRef<WebSocket | null>(null);
     const [mood, setMood] = useState("Neutral");
     const [nudge, setNudge] = useState("");
     const [ritual, setRitual] = useState(null);
@@ -107,24 +108,24 @@ function App() {
       );
     }
 
-    function App() {
-        const [moodHistory, setMoodHistory] = useState<any[]>([]);
-      
-        useEffect(() => {
-          const interval = setInterval(() => {
-            axios.get("http://localhost:8000/mood-history").then((res) => {
-              setMoodHistory(res.data);
-            });
-          }, 5000); // update every 5s
-          return () => clearInterval(interval);
-        }, []);
-      
-        return (
-          <>
-            {/* ...previous content */}
-            <MoodHistoryChart data={moodHistory} />
-          </>
-        );
-      }    
+    function MoodHistoryApp() {
+            const [moodHistory, setMoodHistory] = useState<any[]>([]);
+          
+            useEffect(() => {
+              const interval = setInterval(() => {
+                axios.get("http://localhost:8000/mood-history").then((res) => {
+                  setMoodHistory(res.data);
+                });
+              }, 5000); // update every 5s
+              return () => clearInterval(interval);
+            }, []);
+          
+            return (
+              <>
+                {/* ...previous content */}
+                <MoodHistoryChart data={moodHistory} />
+              </>
+            );
+          }    
 
 export default App;

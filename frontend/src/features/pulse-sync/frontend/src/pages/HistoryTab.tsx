@@ -1,5 +1,6 @@
-import MoodHistoryChart from "../components/MoodHistoryChart";
-import MoodSummary from "../components/MoodSummary";
+import React from "react";
+import MoodHistoryChart from "../../components/charts/MoodHistoryChart";
+import MoodSummary from "../../components/MoodSummary";
 
 const HistoryTab = () => {
   return (
